@@ -2,6 +2,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
 import Select from 'react-select'
 import {names} from "./country_names";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+
+import { Button, Container, Row, Col } from 'react-bootstrap';
 
 function get_random_country() {
     var random_country = names[Math.floor(Math.random()*names.length)];
@@ -76,53 +79,74 @@ function WebPage() {
     );
 
     return <>
-        <section>
-            <header>
-                <h1>Hello {name}, Welcome to Worldle </h1>
-            </header>
-            {/* <h2>DESTINATION: {destination}</h2> */}
-        </section>
-        <h2>Guess Country:</h2>
 
-        {guessResponse.distance === 0 &&
-            <p>CONGRATULATIONS! YOU GOT IT.</p>
-        }
+        <Container>
+            <Row>
+                <section>
+                    <header>
+                        <h1>Hello {name}, Welcome to Worldle </h1>
+                    </header>
+                    {/* <h2>DESTINATION: {destination}</h2> */}
+                </section>
+                <h2>Guess Country:</h2>
 
-        {((guesses_number === 6) & (guessResponse.distance !== 0)) &&
-            <p> SORRY YOU'RE OUT OF GUESSES. YOU'RE TRASH. THE ANSWER WAS {destination}</p>
-        }
+                {guessResponse.distance === 0 &&
+                    <p>CONGRATULATIONS! YOU GOT IT.</p>
+                }
+
+                {((guesses_number === 6) & (guessResponse.distance !== 0)) &&
+                    <p> SORRY YOU'RE OUT OF GUESSES. YOU'RE TRASH. THE ANSWER WAS {destination}</p>
+                }
 
 
 
-        {((guesses_number < 6) & (guessResponse.distance !== 0)) &&
-                <><Select
-                options={country_names}
-                onChange={setCountry} /><p>You Selected: {country.value}</p>
-                <button onClick={fetchData}>
-                    Confirm Guess
-                </button>
-                </>
-        }
-
-        {guessResponse !== {} &&
-                    <>
-                    <table>
-                        <tr>
-                            <th>Guess Number</th>
-                            <th>Guessed Country</th>
-                            <th>Distance to Destination</th>
-                            <th>Direction to Destination</th>
-                        </tr>
-                        {guess_list.map(d => (
-                            <tr>
-                                <td>{d.guess_no}</td>
-                                <td>{d.guessed_country}</td>
-                                <td>{d.distance} km</td>
-                                <td>{d.bearing}</td>
-                            </tr>))}
-                    </table>
+                {((guesses_number < 6) & (guessResponse.distance !== 0)) &&
+                    <><Select
+                        options={country_names}
+                        onChange={setCountry} /><p>You Selected: {country.value}</p>
+                        <button onClick={fetchData}>
+                            Confirm Guess
+                        </button>
                     </>
-        }
+                }
+
+                {guessResponse !== {} &&
+                    <>
+                        <table>
+                            <tr>
+                                <th>Guess Number</th>
+                                <th>Guessed Country</th>
+                                <th>Distance to Destination</th>
+                                <th>Direction to Destination</th>
+                            </tr>
+                            {guess_list.map(d => (
+                                <tr>
+                                    <td>{d.guess_no}</td>
+                                    <td>{d.guessed_country}</td>
+                                    <td>{d.distance} km</td>
+                                    <td>{d.bearing}</td>
+                                </tr>))}
+                        </table>
+                    </>
+                }
+
+            </Row>
+            <Row>
+                <MapContainer center={[51.505, -0.09]} zoom={13} style={{ height: '100vh', width: '100wh' }}>
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+
+                </MapContainer>
+
+
+            </Row>
+        </Container>
+
+
+
+
   
     </>
 }
