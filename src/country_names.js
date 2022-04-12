@@ -184,10 +184,6 @@ export const names = [
        label:"Cameroon"
     },
     {
-       value:"Cyprus No Mans Area",
-       label:"Cyprus No Mans Area"
-    },
-    {
        value:"Democratic Republic of the Congo",
        label:"Democratic Republic of the Congo"
     },
@@ -202,10 +198,6 @@ export const names = [
     {
        value:"Colombia",
        label:"Colombia"
-    },
-    {
-       value:"Comoros",
-       label:"Comoros"
     },
     {
        value:"Cape Verde",
@@ -230,10 +222,6 @@ export const names = [
     {
        value:"Cayman Islands",
        label:"Cayman Islands"
-    },
-    {
-       value:"Northern Cyprus",
-       label:"Northern Cyprus"
     },
     {
        value:"Cyprus",
@@ -704,10 +692,6 @@ export const names = [
        label:"Panama"
     },
     {
-       value:"Pitcairn Islands",
-       label:"Pitcairn Islands"
-    },
-    {
        value:"Peru",
        label:"Peru"
     },
@@ -794,10 +778,6 @@ export const names = [
     {
        value:"Senegal",
        label:"Senegal"
-    },
-    {
-       value:"Serranilla Bank",
-       label:"Serranilla Bank"
     },
     {
        value:"Singapore",
@@ -944,20 +924,12 @@ export const names = [
        label:"Ukraine"
     },
     {
-       value:"United States Minor Outlying Islands",
-       label:"United States Minor Outlying Islands"
-    },
-    {
        value:"Uruguay",
        label:"Uruguay"
     },
     {
        value:"United States of America",
        label:"United States of America"
-    },
-    {
-       value:"US Naval Base Guantanamo Bay",
-       label:"US Naval Base Guantanamo Bay"
     },
     {
        value:"Uzbekistan",

@@ -30,20 +30,16 @@ function MyMap(props) {
 
 
     return <>
-    
-    <div>
-        <h1 style={{ textAlign: "center" }}>
-            My Map
-        </h1>
-        <MapContainer style={{ height: "80vh"}} zoom={2} center={props.centroid}>
-            // takes an array of country features
-            // YOU CAN FILTER AND PASS THE RANDOM COUNTRY THROUGH HERE
+
+        <MapContainer style={{ height: "100vh"}} zoom={2.5} center={props.centroid}>
+            {/* takes an array of country features */}
+            {/* YOU CAN FILTER AND PASS THE RANDOM COUNTRY THROUGH HERE */}
             <GeoJSON data={get_country()}>
                 
             </GeoJSON>
         </MapContainer>
-    </div>
-    
+
+
 
     </>
 

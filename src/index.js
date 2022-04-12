@@ -27,12 +27,14 @@ const random_country = get_random_country();
 function RandomCountry() {
     const [randomCountry, setRandomCountry] = useState(random_country.value);
 
+
+
     var fetch_url = random_country_url.concat(randomCountry);
     
     useEffect(() => {
 
         fetch(fetch_url).then(res => res.json()).then(data => {
-            // console.log(data.random_country);
+
         })});
 
     return <>
@@ -47,7 +49,7 @@ function RandomCountry() {
 };
 
 
-function WebPage() {
+function WebPage(props) {
     const name = "Anugra Shah";
     const [country, setCountry] = useState({
         value: "",
@@ -57,7 +59,7 @@ function WebPage() {
     const [guess_list, setGuesses] = useState(arr_of_guesses);
     const [guesses_number, setGuessesNumber] = useState(1)
     const [guessResponse, setGuessResponse] = useState({});
-    const [centroid, setCentroid] = useState();
+    const [centroid, setCentroid] = useState(props.setting_center);
 
     
 
@@ -76,7 +78,7 @@ function WebPage() {
             fetch(fetch_country).then(res => res.json()).then(data => {
                 setGuessResponse(data.response);
                 var new_center = [data.response.centroid[0], data.response.centroid[1]]
-                console.log(data.response);
+                console.log(new_center);
                 setCentroid(new_center);
                 setGuessesNumber(guesses_number + 1);
                 setGuesses(guess_list.concat(
@@ -94,64 +96,75 @@ function WebPage() {
     );
 
     return <>
-
-        <Container>
-            <Row>
+    
+    <Container fluid>
+        <Row>
+            <Col md lg="4">
                 <section>
-                    <header>
-                        <h1>Hello {name}, Welcome to Worldle </h1>
-                    </header>
-                    {/* <h2>DESTINATION: {destination}</h2> */}
-                </section>
-                <h2>Guess Country:</h2>
+                        <header>
+                            <h1>Welcome to Worldle </h1>
+                        </header>
+                        {/* <h2>DESTINATION: {destination}</h2> */}
+                    </section>
+                    <h2>Guess Country:</h2>
 
-                {guessResponse.distance === 0 &&
-                    <p>CONGRATULATIONS! YOU GOT IT.</p>
-                }
+                    {guessResponse.distance === 0 &&
+                        <p>CONGRATULATIONS! YOU GOT IT.</p>
+                        
+                    }
 
-                {((guesses_number === 6) & (guessResponse.distance !== 0)) &&
-                    <p> SORRY YOU'RE OUT OF GUESSES. YOU'RE TRASH. THE ANSWER WAS {destination}</p>
-                }
+                    {((guesses_number === 6) & (guessResponse.distance !== 0)) &&
+                        <p> SORRY YOU'RE OUT OF GUESSES. YOU'RE TRASH. THE ANSWER WAS {destination}</p>
+                    }
 
 
 
-                {((guesses_number < 6) & (guessResponse.distance !== 0)) &&
-                    <><Select
-                        options={country_names}
-                        onChange={setCountry} /><p>You Selected: {country.value}</p>
-                        <button onClick={fetchData}>
-                            Confirm Guess
-                        </button>
-                    </>
-                }
+                    {((guesses_number < 6) & (guessResponse.distance !== 0)) &&
+                        <><Select
+                            options={country_names}
+                            onChange={setCountry} /><p>You Selected: {country.value}</p>
+                            <button onClick={fetchData}>
+                                Confirm Guess
+                            </button>
+                        </>
+                    }
 
-                {guessResponse !== {} &&
-                    <>
-                        <table>
-                            <tr>
-                                <th>Guess Number</th>
-                                <th>Guessed Country</th>
-                                <th>Distance to Destination</th>
-                                <th>Direction to Destination</th>
-                            </tr>
-                            {guess_list.map(d => (
+                    {guessResponse !== {} &&
+                        <>
+                            <table>
                                 <tr>
-                                    <td>{d.guess_no}</td>
-                                    <td>{d.guessed_country}</td>
-                                    <td>{d.distance} km</td>
-                                    <td>{d.bearing}</td>
-                                </tr>))}
-                        </table>
-                    </>
-                }
+                                    <th>Guess Number</th>
+                                    <th>Guessed Country</th>
+                                    <th>Distance to Destination</th>
+                                    <th>Direction to Destination</th>
+                                </tr>
+                                {guess_list.map(d => (
+                                    <tr>
+                                        <td>{d.guess_no}</td>
+                                        <td>{d.guessed_country}</td>
+                                        <td>{d.distance} km</td>
+                                        <td>{d.bearing}</td>
+                                    </tr>))}
+                            </table>
+                        </>
+                    }
+            
+            </Col>
 
-            </Row>
-            <Row>
+            <Col>
+                <MyMap rand_dest={destination} centroid={[7,100]}/>   
+            </Col>
 
-                    <MyMap rand_dest={destination} centroid={[25,100]}/>
+
+
+
+                
             </Row>
+                
+
+
+
         </Container>
-
 
 
 
