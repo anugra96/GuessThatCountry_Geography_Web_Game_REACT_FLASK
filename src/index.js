@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
 import Select from 'react-select'
+import { LatLng } from "leaflet";
 import {names} from "./country_names";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import MyMap from "./map";
+import "leaflet/dist/leaflet.css";
+// import country_geojson from "./countries.js";
 
 import { Button, Container, Row, Col } from 'react-bootstrap';
 
@@ -31,7 +35,14 @@ function RandomCountry() {
             // console.log(data.random_country);
         })});
 
-    return <WebPage />
+    return <>
+    
+        {/* <MyMap rand_dest={randomCountry}/> */}
+        <WebPage />
+    </>
+    
+    
+    
 
 };
 
@@ -46,6 +57,7 @@ function WebPage() {
     const [guess_list, setGuesses] = useState(arr_of_guesses);
     const [guesses_number, setGuessesNumber] = useState(1)
     const [guessResponse, setGuessResponse] = useState({});
+    const [centroid, setCentroid] = useState();
 
     
 
@@ -63,6 +75,9 @@ function WebPage() {
         () => {
             fetch(fetch_country).then(res => res.json()).then(data => {
                 setGuessResponse(data.response);
+                var new_center = [data.response.centroid[0], data.response.centroid[1]]
+                console.log(data.response);
+                setCentroid(new_center);
                 setGuessesNumber(guesses_number + 1);
                 setGuesses(guess_list.concat(
                     {
@@ -132,15 +147,8 @@ function WebPage() {
 
             </Row>
             <Row>
-                <MapContainer center={[51.505, -0.09]} zoom={13} style={{ height: '100vh', width: '100wh' }}>
-                    <TileLayer
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
 
-                </MapContainer>
-
-
+                    <MyMap rand_dest={destination} centroid={[25,100]}/>
             </Row>
         </Container>
 
