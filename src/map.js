@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef, onEachFeature } from "react";
 import ReactDOM from "react-dom";
-import { MapContainer, TileLayer, Marker, Popup, GeoJSON, leafletElement, useMap, MapConsumer } from 'react-leaflet'
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { MapContainer, GeoJSON, MapConsumer } from 'react-leaflet'
 import mapData from "./countries.json";
 import CountryCenters from  "./new_mini.json";
-import { LatLng } from "leaflet";
-import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
+
 
 function CountryMap(props) {
 
@@ -35,41 +33,6 @@ function CountryMap(props) {
         return center_obj;
     }
 
-    // function ZoomTo(center) {
-    //     // const { current = {} } = map_cont;
-    //     // const { leafletElement: map } = current;
-    //     map.setView(center, 14);
-
-    // }
-
-    // const OnEachCountry = useCallback(
-    //     (country, layer) => {
-    //         const countryName = country.properties.ADMIN;
-
-    //         if (props.rand_dest === countryName) {
-    //             layer.setStyle(
-    //                 {
-    //                     color: "black",
-    //                 }
-    //             )
-    //             // map_cont.current.setView(layer.getBounds().getCenter());
-    //             // const center = layer.getBounds().getCenter()
-    //             // ZoomTo(center);
-    //             console.log(layer.getBounds().getCenter());
-    //             setCenter(layer.getBounds().getCenter());
-    //         } else {
-    //             layer.setStyle(
-    //                 {
-    //                     color: "white",
-    //                     fillOpacity: 0,
-    //                     opacity: 0,
-    //                 }
-    //             )
-    //         }
-    //     }
-    // );
-    
-
     function OnEachCountry (country, layer) {
 
         const countryName = country.properties.ADMIN;
@@ -80,14 +43,6 @@ function CountryMap(props) {
                     color: "black",
                 }
             )
-            // map_cont.current.setView(layer.getBounds().getCenter());
-            // const center = layer.getBounds().getCenter()
-            // ZoomTo(center);
-
-
-            // console.log(layer.getBounds().getCenter());
-            // setCenter(layer.getBounds().getCenter());
-
         } else {
             layer.setStyle(
                 {

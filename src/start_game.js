@@ -1,63 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react";
-import ReactDOM from "react-dom";
 import Select from 'react-select'
-import { LatLng } from "leaflet";
 import {names} from "./country_names";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import CountryMap from "./map";
 import "leaflet/dist/leaflet.css";
-// import country_geojson from "./countries.js";
 
-import { Button, Container, Row, Col } from 'react-bootstrap';
 
-// function get_random_country() {
-//     var random_country = names[Math.floor(Math.random()*names.length)];
-//     return random_country;
-// }
+import { Container, Row, Col } from 'react-bootstrap';
+
 
 const country_names = names;
 
 const arr_of_guesses = [];
 
 const make_guess_str = "/make_guess/";
-// const random_country_url = "/random_country/";
-
-// const random_country = get_random_country();
-
-// function RandomCountry(props) {
-//     const [randomCountry, setRandomCountry] = useState(random_country.value);
-//     const [centroid, setCentroid] = useState([])
-//     const home_country = props.home_country;
-
-//     var fetch_url = random_country_url.concat(randomCountry);
-
-//     // const fetchData = useCallback(
-//     //     () => {
-//     //         fetch(fetch_url).then(res => res.json()).then(data => {
-//     //             console.log(data.response.random_country_centroid);
-//     //             setCentroid(data.response.random_country_centroid);
-//     //         },
-//     //     [fetch_url = random_country_url.concat(randomCountry)],
-    
-//     // )});
-
-    
-    
-//     useEffect(() => {
-
-//         fetch(fetch_url).then(res => res.json()).then(data => {
-//             setCentroid(data.random_country_centroid);
-//             console.log(data.random_country_centroid);
-//         })});
-
-//     return <>
-//         <WebPage home_country={home_country} center={centroid}/>
-//     </>
-    
-    
-    
-
-// }
 
 
 function WebPage(props) {
@@ -75,14 +30,10 @@ function WebPage(props) {
 
     var fetch_country;
     // make variable that fetches distance from flask api
-
     const fetchData = useCallback(
         () => {
             fetch(fetch_country).then(res => res.json()).then(data => {
                 setGuessResponse(data.response);
-                // var new_center = [data.response.centroid[0], data.response.centroid[1]]
-                // console.log(new_center);
-                // setCentroid(new_center);
                 setGuessesNumber(guesses_number + 1);
                 setGuesses(guess_list.concat(
                     {
@@ -108,7 +59,6 @@ function WebPage(props) {
                             <h1>Welcome to Worldle.</h1>
                             <h2>Your Home Country is: {props.home_country}</h2>
                         </header>
-                        {/* <h2>DESTINATION: {destination}</h2> */}
                     </section>
                     <h2>Guess Country:</h2>
 
@@ -120,7 +70,6 @@ function WebPage(props) {
                     {((guesses_number === 6) & (guessResponse.distance !== 0)) &&
                         <p> SORRY YOU'RE OUT OF GUESSES. YOU'RE TRASH. THE ANSWER WAS {destination}</p>
                     }
-
 
 
                     {((guesses_number < 6) & (guessResponse.distance !== 0)) &&
@@ -160,19 +109,10 @@ function WebPage(props) {
             </Col>
 
 
-
-
-                
             </Row>
                 
-
-
-
         </Container>
 
-
-
-  
     </>
 }
 

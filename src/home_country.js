@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback, useRef, onEachFeature } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet'
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { MapContainer, GeoJSON } from 'react-leaflet'
+
 import mapData from "./countries.json";
-import { LatLng } from "leaflet";
 import WebPage from "./start_game";
 
 function AllCountryMap(props) {
@@ -30,8 +29,6 @@ function AllCountryMap(props) {
                         fillColor: "blue",
                     }
                 )
-
-
                 setHomeCountry(countryName);
             }
         })
@@ -53,15 +50,7 @@ function AllCountryMap(props) {
             </MapContainer>
         }
 
-
-
-
-
     </>
-
-
-
-
 };
 
 // Exporting the component
