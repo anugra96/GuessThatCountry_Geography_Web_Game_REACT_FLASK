@@ -59,7 +59,7 @@ function CountryMap(props) {
 
     return <>
 
-        <MapContainer style={{ height: "100vh"}} zoom={6} center={get_country_center()}>
+        <MapContainer style={{ height: "50vh"}} zoom={6} center={get_country_center()}>
             {/* takes an array of country features */}
             {/* YOU CAN FILTER AND PASS THE RANDOM COUNTRY THROUGH HERE */}
             <GeoJSON data={mapData.features} onEachFeature={OnEachCountry}/>

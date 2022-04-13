@@ -94,7 +94,9 @@ function WebPage(props) {
             return SSE;
         } else if (query_direction === "ESE") {
             return ESE;
-        } 
+        } else {
+            return N;
+        }
     }
 
     return <>
@@ -146,7 +148,8 @@ function WebPage(props) {
                                             <td>{d.distance} km</td>
                                             <td><img style={{
                                                 width: 20,
-                                            }}src={get_arrow(d.bearing)} /> {d.bearing}</td>
+                                                height: 20,
+                                            }}src={get_arrow(d.bearing)} /></td>
                                         </tr>))}
                                 </tbody>
                             </table>
