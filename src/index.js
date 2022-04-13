@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
+import {createRoot} from 'react-dom/client';
 import {names} from "./Data/country_names";
 import AllCountryMap from "./Components/home_country";
 import WebPage from "./Components/start_game";
 import "leaflet/dist/leaflet.css";
 import "./Styles/MyMap.css";
+
+const rootElement = document.getElementById('root');
+const root = createRoot(rootElement);
 
 
 function get_random_country() {
@@ -39,4 +43,4 @@ function HomePage(props) {
 }
 
 
-ReactDOM.render(<RandomCountry />, document.getElementById("root"));
+root.render(<RandomCountry />);

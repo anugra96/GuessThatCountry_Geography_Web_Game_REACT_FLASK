@@ -3,9 +3,8 @@ import Select from 'react-select'
 import {names} from "../Data/country_names";
 import {MemoizedCountryMap} from "./map";
 import "leaflet/dist/leaflet.css";
-
-
 import { Container, Row, Col } from 'react-bootstrap';
+
 
 
 const country_names = names;
@@ -83,19 +82,21 @@ function WebPage(props) {
                     {guessResponse !== {} &&
                         <>
                             <table>
-                                <tr>
-                                    <th>Guess Number</th>
-                                    <th>Guessed Country</th>
-                                    <th>Distance to Destination</th>
-                                    <th>Direction to Destination</th>
-                                </tr>
-                                {guess_list.map(d => (
+                                <tbody>
                                     <tr>
-                                        <td>{d.guess_no}</td>
-                                        <td>{d.guessed_country}</td>
-                                        <td>{d.distance} km</td>
-                                        <td>{d.bearing}</td>
-                                    </tr>))}
+                                        <th>Guess Number</th>
+                                        <th>Guessed Country</th>
+                                        <th>Distance to Destination</th>
+                                        <th>Direction to Destination</th>
+                                    </tr>
+                                    {guess_list.map(d => (
+                                        <tr>
+                                            <td>{d.guess_no}</td>
+                                            <td>{d.guessed_country}</td>
+                                            <td>{d.distance} km</td>
+                                            <td>{d.bearing}</td>
+                                        </tr>))}
+                                </tbody>
                             </table>
                         </>
                     }
