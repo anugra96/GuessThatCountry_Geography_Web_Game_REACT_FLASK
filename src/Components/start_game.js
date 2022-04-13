@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Select from 'react-select'
 import {names} from "../Data/country_names";
-import {MemoizedCountryMap} from "./map";
+import {MemoizedDestinationMap} from "./destination_map";
+import GuessMap from "./guess_map";
 import "leaflet/dist/leaflet.css";
 
 
@@ -43,6 +44,7 @@ function WebPage(props) {
                         destination: destination
                     }
                 ))
+                
             })
         },
         [fetch_country = make_guess_str.concat(country.value).concat("/").concat(destination)],
@@ -51,7 +53,7 @@ function WebPage(props) {
     return <>
     
     <Container fluid>
-        <Row>
+        {/* <Row>
             <Col md lg="4">
                 <section>
                         <header>
@@ -104,10 +106,72 @@ function WebPage(props) {
             </Col>
 
             <Col>
-                <MemoizedCountryMap rand_dest={destination}/>   
+                <MemoizedDestinationMap rand_dest={destination}/>   
             </Col>
 
 
+            </Row> */}
+
+
+            <Row xs={1} md={2}>
+
+                <Col>
+                    <section>
+                            <header>
+                                <h1>Welcome to Worldle.</h1>
+                                <h2>Your Home Country is: {props.home_country}</h2>
+                            </header>
+                        </section>
+                        <h2>Guess Country:</h2>
+
+                        {guessResponse.distance === 0 &&
+                            <p>CONGRATULATIONS! YOU GOT IT.</p>
+                            
+                        }
+
+                        {((guesses_number === 6) & (guessResponse.distance !== 0)) &&
+                            <p> SORRY YOU'RE OUT OF GUESSES. YOU'RE TRASH. THE ANSWER WAS {destination}</p>
+                        }
+
+
+                        {((guesses_number < 6) & (guessResponse.distance !== 0)) &&
+                            <><Select
+                                options={country_names}
+                                onChange={setCountry} /><p>You Selected: {country.value}</p>
+                                <button onClick={fetchData}>
+                                    Confirm Guess
+                                </button>
+                            </>
+                        }
+
+                        {guessResponse !== {} &&
+                            <>
+                                <table>
+                                    <tr>
+                                        <th>Guess Number</th>
+                                        <th>Guessed Country</th>
+                                        <th>Distance to Destination</th>
+                                        <th>Direction to Destination</th>
+                                    </tr>
+                                    {guess_list.map(d => (
+                                        <tr>
+                                            <td>{d.guess_no}</td>
+                                            <td>{d.guessed_country}</td>
+                                            <td>{d.distance} km</td>
+                                            <td>{d.bearing}</td>
+                                        </tr>))}
+                                </table>
+                            </>
+                        }
+                </Col>
+
+                <Col>
+                    <GuessMap guess_country={country.value} guess_num={guesses_number} />
+                </Col>
+
+                <Col>
+                    <MemoizedDestinationMap rand_dest={destination}/>  
+                </Col>
             </Row>
                 
         </Container>
