@@ -56,22 +56,21 @@ function WebPage(props) {
                 <section>
                         <header>
                             <h1>Welcome to Worldle.</h1>
-                            <h2>Your Home Country is: {props.home_country}</h2>
                         </header>
                     </section>
                     <h2>Guess Country:</h2>
 
-                    {guessResponse.distance === 0 &&
+                    {!!(guessResponse.distance === 0) &&
                         <p>CONGRATULATIONS! YOU GOT IT.</p>
                         
                     }
 
-                    {((guesses_number === 6) & (guessResponse.distance !== 0)) &&
+                    {!!((guesses_number === 6) & (guessResponse.distance !== 0)) &&
                         <p> SORRY YOU'RE OUT OF GUESSES. YOU'RE TRASH. THE ANSWER WAS {destination}</p>
                     }
 
 
-                    {((guesses_number < 6) & (guessResponse.distance !== 0)) &&
+                    {!!((guesses_number < 6) & (guessResponse.distance !== 0)) &&
                         <><Select
                             options={country_names}
                             onChange={setCountry} /><p>You Selected: {country.value}</p>

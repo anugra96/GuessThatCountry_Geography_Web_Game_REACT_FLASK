@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
 import {names} from "./Data/country_names";
 import AllCountryMap from "./Components/home_country";
+import WebPage from "./Components/start_game";
 import "leaflet/dist/leaflet.css";
 import "./Styles/MyMap.css";
 
@@ -33,7 +34,7 @@ function RandomCountry(props) {
 function HomePage(props) {
     const random_country_prop = props.random_country;
     return <>
-        <AllCountryMap rand_dest={random_country_prop} />
+        <WebPage rand_dest={random_country_prop} />
     </>
 }
 
