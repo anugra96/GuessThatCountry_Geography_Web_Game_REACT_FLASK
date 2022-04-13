@@ -40,13 +40,14 @@ function CountryMap(props) {
         if (props.rand_dest === countryName) {
             layer.setStyle(
                 {
-                    color: "black",
+                    color: "white",
+                    fillColor: "white",
                 }
             )
         } else {
             layer.setStyle(
                 {
-                    color: "white",
+                    color: "#1f1f1f",
                     fillOpacity: 0,
                     opacity: 0,
                 }
@@ -58,13 +59,13 @@ function CountryMap(props) {
 
     return <>
 
-        <MapContainer style={{ height: "100vh"}} zoom={2.5} center={[20,100]}>
+        <MapContainer style={{ height: "100vh"}} zoom={6} center={get_country_center()}>
             {/* takes an array of country features */}
             {/* YOU CAN FILTER AND PASS THE RANDOM COUNTRY THROUGH HERE */}
             <GeoJSON data={mapData.features} onEachFeature={OnEachCountry}/>
             <MapConsumer>
                 {(map) => {
-                    map.flyTo(get_country_center(), 4);
+                    map.flyTo(get_country_center(), 6);
                 }}
             </MapConsumer>
         </MapContainer>
@@ -79,4 +80,5 @@ function CountryMap(props) {
 };
 
 // Exporting the component
-export default CountryMap;
+
+export const MemoizedCountryMap = React.memo(CountryMap);

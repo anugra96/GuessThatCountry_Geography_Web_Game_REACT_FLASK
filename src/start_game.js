@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Select from 'react-select'
 import {names} from "./country_names";
-import CountryMap from "./map";
+import {MemoizedCountryMap} from "./map";
 import "leaflet/dist/leaflet.css";
 
 
@@ -16,7 +16,6 @@ const make_guess_str = "/make_guess/";
 
 
 function WebPage(props) {
-    const name = "Anugra Shah";
     const [country, setCountry] = useState({
         value: props.home_country,
         label: props.home_country
@@ -105,7 +104,7 @@ function WebPage(props) {
             </Col>
 
             <Col>
-                <CountryMap rand_dest={destination} centroid={[20,100]}/>   
+                <MemoizedCountryMap rand_dest={destination}/>   
             </Col>
 
 
