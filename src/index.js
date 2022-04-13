@@ -20,7 +20,7 @@ const random_country_url = "/random_country/";
 
 const random_country = get_random_country();
 
-function RandomCountry(props) {
+function RandomCountry() {
     const [randomCountry, setRandomCountry] = useState(random_country.value);
     var fetch_url = random_country_url.concat(randomCountry);
     useEffect(() => {

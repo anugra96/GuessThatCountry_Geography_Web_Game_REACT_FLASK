@@ -4,8 +4,22 @@ import {names} from "../Data/country_names";
 import {MemoizedCountryMap} from "./map";
 import "leaflet/dist/leaflet.css";
 import { Container, Row, Col } from 'react-bootstrap';
-
-
+import N from '../arrows/N.png';
+import S from '../arrows/S.png';
+import E from '../arrows/E.png';
+import W from '../arrows/W.png';
+import NW from '../arrows/NW.png';
+import NNW from '../arrows/NNW.png';
+import WNW from '../arrows/WNW.png';
+import NE from '../arrows/NE.png';
+import NNE from '../arrows/NNE.png';
+import ENE from '../arrows/ENE.png';
+import SW from '../arrows/SW.png';
+import SSW from '../arrows/SSW.png';
+import WSW from '../arrows/WSW.png';
+import SE from '../arrows/SE.png';
+import SSE from '../arrows/SSE.png';
+import ESE from '../arrows/ESE.png';
 
 const country_names = names;
 
@@ -46,6 +60,42 @@ function WebPage(props) {
         },
         [fetch_country = make_guess_str.concat(country.value).concat("/").concat(destination)],
     );
+
+    function get_arrow(query_direction) {
+        if (query_direction === "N") {
+            return N;
+        } else if (query_direction === "S") {
+            return S;
+        } else if (query_direction === "E") {
+            return E;
+        } else if (query_direction === "W") {
+            return W;
+        } else if (query_direction === "NW") {
+            return NW;
+        } else if (query_direction === "NNW") {
+            return NNW;
+        } else if (query_direction === "WNW") {
+            return WNW;
+        } else if (query_direction === "NE") {
+            return NE;
+        } else if (query_direction === "NNE") {
+            return NNE;
+        } else if (query_direction === "ENE") {
+            return ENE;
+        } else if (query_direction === "SW") {
+            return SW;
+        } else if (query_direction === "SSW") {
+            return SSW;
+        } else if (query_direction === "WSW") {
+            return WSW;
+        } else if (query_direction === "SE") {
+            return SE;
+        } else if (query_direction === "SSE") {
+            return SSE;
+        } else if (query_direction === "ESE") {
+            return ESE;
+        } 
+    }
 
     return <>
     
@@ -94,7 +144,9 @@ function WebPage(props) {
                                             <td>{d.guess_no}</td>
                                             <td>{d.guessed_country}</td>
                                             <td>{d.distance} km</td>
-                                            <td>{d.bearing}</td>
+                                            <td><img style={{
+                                                width: 20,
+                                            }}src={get_arrow(d.bearing)} /> {d.bearing}</td>
                                         </tr>))}
                                 </tbody>
                             </table>
