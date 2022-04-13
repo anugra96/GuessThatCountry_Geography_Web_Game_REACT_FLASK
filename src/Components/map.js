@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef, onEachFeature } from "react";
 import ReactDOM from "react-dom";
 import { MapContainer, GeoJSON, MapConsumer } from 'react-leaflet'
-import mapData from "./countries.json";
-import CountryCenters from  "./new_mini.json";
+import mapData from "../Data/countries.json";
+import CountryCenters from  "../Data/new_mini.json";
 
 
 function CountryMap(props) {

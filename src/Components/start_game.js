@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Select from 'react-select'
-import {names} from "./country_names";
+import {names} from "../Data/country_names";
 import {MemoizedCountryMap} from "./map";
 import "leaflet/dist/leaflet.css";
 

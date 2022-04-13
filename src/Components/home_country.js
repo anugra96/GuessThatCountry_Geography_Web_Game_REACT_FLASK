@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { MapContainer, GeoJSON } from 'react-leaflet'
 
-import mapData from "./countries.json";
+import mapData from "../Data/countries.json";
 import WebPage from "./start_game";
 
 function AllCountryMap(props) {

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
-import {names} from "./country_names";
-import AllCountryMap from "./home_country";
+import {names} from "./Data/country_names";
+import AllCountryMap from "./Components/home_country";
 import "leaflet/dist/leaflet.css";
-import "./MyMap.css";
+import "./Styles/MyMap.css";
 
 
 function get_random_country() {
