@@ -644,10 +644,6 @@ export const names = [
        label:"Niger"
     },
     {
-       value:"Norfolk Island",
-       label:"Norfolk Island"
-    },
-    {
        value:"Nigeria",
        label:"Nigeria"
     },
@@ -824,10 +820,6 @@ export const names = [
        label:"Republic of Serbia"
     },
     {
-       value:"Sao Tome and Principe",
-       label:"Sao Tome and Principe"
-    },
-    {
        value:"Suriname",
        label:"Suriname"
     },
@@ -966,10 +958,6 @@ export const names = [
     {
        value:"Wallis and Futuna",
        label:"Wallis and Futuna"
-    },
-    {
-       value:"Akrotiri Sovereign Base Area",
-       label:"Akrotiri Sovereign Base Area"
     },
     {
        value:"Samoa",

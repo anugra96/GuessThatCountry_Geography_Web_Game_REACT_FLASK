@@ -4,8 +4,11 @@ import Select from 'react-select'
 import { LatLng } from "leaflet";
 import {names} from "./country_names";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import MyMap from "./map";
+import CountryMap from "./map";
+import WebPage from "./start_game";
+import AllCountryMap from "./home_country";
 import "leaflet/dist/leaflet.css";
+import "./MyMap.css";
 // import country_geojson from "./countries.js";
 
 import { Button, Container, Row, Col } from 'react-bootstrap';
@@ -15,21 +18,27 @@ function get_random_country() {
     return random_country;
 }
 
-const country_names = names;
 
-const arr_of_guesses = [];
 
-const make_guess_str = "/make_guess/";
 const random_country_url = "/random_country/";
 
 const random_country = get_random_country();
 
-function RandomCountry() {
+function RandomCountry(props) {
     const [randomCountry, setRandomCountry] = useState(random_country.value);
-
-
-
     var fetch_url = random_country_url.concat(randomCountry);
+
+    // const fetchData = useCallback(
+    //     () => {
+    //         fetch(fetch_url).then(res => res.json()).then(data => {
+    //             console.log(data.response.random_country_centroid);
+    //             setCentroid(data.response.random_country_centroid);
+    //         },
+    //     [fetch_url = random_country_url.concat(randomCountry)],
+    
+    // )});
+
+    
     
     useEffect(() => {
 
@@ -38,139 +47,24 @@ function RandomCountry() {
         })});
 
     return <>
-    
-        {/* <MyMap rand_dest={randomCountry}/> */}
-        <WebPage />
+        <HomePage random_country={randomCountry}/>
     </>
     
     
     
 
-};
+}
 
 
-function WebPage(props) {
-    const name = "Anugra Shah";
-    const [country, setCountry] = useState({
-        value: "",
-        label: ""
-    });
-    const [destination, setDestination] = useState(random_country.value);
-    const [guess_list, setGuesses] = useState(arr_of_guesses);
-    const [guesses_number, setGuessesNumber] = useState(1)
-    const [guessResponse, setGuessResponse] = useState({});
-    const [centroid, setCentroid] = useState(props.setting_center);
-
-    
-
-    var fetch_country;
-    // make variable that fetches distance from flask api
-
-    // useEffect(() => {
-    //     fetch(fetch_country).then(res => res.json()).then(data => {
-    //       setGuessResponse(data.response);
-    //     });
-    // }, []);
-
-
-    const fetchData = useCallback(
-        () => {
-            fetch(fetch_country).then(res => res.json()).then(data => {
-                setGuessResponse(data.response);
-                var new_center = [data.response.centroid[0], data.response.centroid[1]]
-                console.log(new_center);
-                setCentroid(new_center);
-                setGuessesNumber(guesses_number + 1);
-                setGuesses(guess_list.concat(
-                    {
-                        guess_no: guesses_number,
-                        guessed_country: country.value,
-                        distance: data.response.distance,
-                        bearing: data.response.direction,
-                        destination: destination
-                    }
-                ))
-            })
-        },
-        [fetch_country = make_guess_str.concat(country.value).concat("/").concat(destination)],
-    );
-
+function HomePage(props) {
+    const random_country_prop = props.random_country;
     return <>
-    
-    <Container fluid>
-        <Row>
-            <Col md lg="4">
-                <section>
-                        <header>
-                            <h1>Welcome to Worldle </h1>
-                        </header>
-                        {/* <h2>DESTINATION: {destination}</h2> */}
-                    </section>
-                    <h2>Guess Country:</h2>
-
-                    {guessResponse.distance === 0 &&
-                        <p>CONGRATULATIONS! YOU GOT IT.</p>
-                        
-                    }
-
-                    {((guesses_number === 6) & (guessResponse.distance !== 0)) &&
-                        <p> SORRY YOU'RE OUT OF GUESSES. YOU'RE TRASH. THE ANSWER WAS {destination}</p>
-                    }
-
-
-
-                    {((guesses_number < 6) & (guessResponse.distance !== 0)) &&
-                        <><Select
-                            options={country_names}
-                            onChange={setCountry} /><p>You Selected: {country.value}</p>
-                            <button onClick={fetchData}>
-                                Confirm Guess
-                            </button>
-                        </>
-                    }
-
-                    {guessResponse !== {} &&
-                        <>
-                            <table>
-                                <tr>
-                                    <th>Guess Number</th>
-                                    <th>Guessed Country</th>
-                                    <th>Distance to Destination</th>
-                                    <th>Direction to Destination</th>
-                                </tr>
-                                {guess_list.map(d => (
-                                    <tr>
-                                        <td>{d.guess_no}</td>
-                                        <td>{d.guessed_country}</td>
-                                        <td>{d.distance} km</td>
-                                        <td>{d.bearing}</td>
-                                    </tr>))}
-                            </table>
-                        </>
-                    }
-            
-            </Col>
-
-            <Col>
-                <MyMap rand_dest={destination} centroid={[7,100]}/>   
-            </Col>
-
-
-
-
-                
-            </Row>
-                
-
-
-
-        </Container>
-
-
-
-  
+        <AllCountryMap rand_dest={random_country_prop} />
     </>
 }
+
+
+
 
 
 ReactDOM.render(<RandomCountry />, document.getElementById("root"));
