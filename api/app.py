@@ -30,4 +30,5 @@ def make_guess(country, destination):
 
 
 
-
+if __name__ == '__main__':
+    app.run()
