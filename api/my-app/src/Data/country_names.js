@@ -48,14 +48,6 @@ export const names = [
        label:"Antarctica"
     },
     {
-       value:"Ashmore and Cartier Islands",
-       label:"Ashmore and Cartier Islands"
-    },
-    {
-       value:"French Southern and Antarctic Lands",
-       label:"French Southern and Antarctic Lands"
-    },
-    {
        value:"Antigua and Barbuda",
        label:"Antigua and Barbuda"
     },
@@ -107,10 +99,7 @@ export const names = [
        value:"Bosnia and Herzegovina",
        label:"Bosnia and Herzegovina"
     },
-    {
-       value:"Bajo Nuevo Bank (Petrel Is.)",
-       label:"Bajo Nuevo Bank (Petrel Is.)"
-    },
+
     {
        value:"Saint Barthelemy",
        label:"Saint Barthelemy"
@@ -268,10 +257,6 @@ export const names = [
        label:"Eritrea"
     },
     {
-       value:"Dhekelia Sovereign Base Area",
-       label:"Dhekelia Sovereign Base Area"
-    },
-    {
        value:"Spain",
        label:"Spain"
     },
@@ -372,14 +357,6 @@ export const names = [
        label:"Guyana"
     },
     {
-       value:"Hong Kong S.A.R.",
-       label:"Hong Kong S.A.R."
-    },
-    {
-       value:"Heard Island and McDonald Islands",
-       label:"Heard Island and McDonald Islands"
-    },
-    {
        value:"Honduras",
        label:"Honduras"
     },
@@ -406,14 +383,6 @@ export const names = [
     {
        value:"India",
        label:"India"
-    },
-    {
-       value:"Indian Ocean Territories",
-       label:"Indian Ocean Territories"
-    },
-    {
-       value:"British Indian Ocean Territory",
-       label:"British Indian Ocean Territory"
     },
     {
        value:"Ireland",
@@ -454,14 +423,6 @@ export const names = [
     {
        value:"Japan",
        label:"Japan"
-    },
-    {
-       value:"Baykonur Cosmodrome",
-       label:"Baykonur Cosmodrome"
-    },
-    {
-       value:"Siachen Glacier",
-       label:"Siachen Glacier"
     },
     {
        value:"Kazakhstan",
@@ -604,10 +565,6 @@ export const names = [
        label:"Mongolia"
     },
     {
-       value:"Northern Mariana Islands",
-       label:"Northern Mariana Islands"
-    },
-    {
        value:"Mozambique",
        label:"Mozambique"
     },
@@ -692,10 +649,6 @@ export const names = [
        label:"Peru"
     },
     {
-       value:"Spratly Islands",
-       label:"Spratly Islands"
-    },
-    {
        value:"Philippines",
        label:"Philippines"
     },
@@ -778,10 +731,6 @@ export const names = [
     {
        value:"Singapore",
        label:"Singapore"
-    },
-    {
-       value:"South Georgia and South Sandwich Islands",
-       label:"South Georgia and South Sandwich Islands"
     },
     {
        value:"Saint Helena",
