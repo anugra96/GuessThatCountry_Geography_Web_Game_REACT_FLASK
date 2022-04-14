@@ -29,7 +29,7 @@ function CountryMap(props) {
 
 
         if (temp_area < 5000) {
-            zoom_level = 11;
+            zoom_level = 8.5;
         }
         else if ((temp_area > 5000) && (temp_area < 100000)) {
             zoom_level = 7; 
@@ -100,7 +100,7 @@ function CountryMap(props) {
 
     return <>
 
-        <MapContainer style={{ height: "50vh"}} zoom={set_zoom()} center={get_country_center()} zoomControl={false}>
+        <MapContainer style={{ height: "40vh"} } zoom={set_zoom() } center={get_country_center()} zoomControl={false} >
             {/* takes an array of country features */}
             {/* YOU CAN FILTER AND PASS THE RANDOM COUNTRY THROUGH HERE */}
             <GeoJSON data={mapData.features} onEachFeature={OnEachCountry}/>

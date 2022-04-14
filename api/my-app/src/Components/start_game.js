@@ -101,14 +101,19 @@ function WebPage(props) {
 
     return <>
     
-    <Container fluid>
-        <Row>
-            <Col md lg="4">
-                <section>
+    <Container>
+        <Row className="pt-2">
+            <Col>
+                    <section>
                         <header>
                             <h1>Welcome to Worldle.</h1>
                         </header>
                     </section>
+                    <h3>Guesses left: {6 - guesses_number}</h3>
+                <MemoizedCountryMap rand_dest={destination}/>   
+            </Col>
+            <Col md lg="4">
+
                     <h2>Guess Country:</h2>
 
                     {!!(guessResponse.distance === 0) &&
@@ -124,7 +129,8 @@ function WebPage(props) {
                     {!!((guesses_number < 6) & (guessResponse.distance !== 0)) &&
                         <><Select
                             options={country_names}
-                            onChange={setCountry} /><p>You Selected: {country.value}</p>
+                            onChange={setCountry}
+                            style={{zIndex:9}} />
                             <button onClick={fetchData}>
                                 Confirm Guess
                             </button>
@@ -156,10 +162,6 @@ function WebPage(props) {
                         </>
                     }
             
-            </Col>
-
-            <Col>
-                <MemoizedCountryMap rand_dest={destination}/>   
             </Col>
 
 
