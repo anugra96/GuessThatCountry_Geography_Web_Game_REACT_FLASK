@@ -1,20 +1,29 @@
 import time
 from flask import Flask, request
+from flask import send_from_directory
 from guess import random_country
 from guess import take_a_guess
 from guess import get_centroid
+from flask_cors import CORS, cross_origin
 
-app = Flask(__name__)
+create_app = Flask(__name__, static_folder='my-app/build', static_url_path='')
+CORS(create_app)
+
 
 destination = ""
 
-@app.route('/random_country/<code>')
+@create_app.route('/')
+@cross_origin()
+def serve():
+    return send_from_directory(create_app.static_folder, 'index.html')
+
+@create_app.route('/random_country/<code>')
 def get_random_country(code):
     print(code)
     destination = code
     return {'random_country_centroid': get_centroid(destination)}
 
-@app.route('/make_guess/<country>/<destination>')
+@create_app.route('/make_guess/<country>/<destination>')
 def make_guess(country, destination):
     print(country)
     print(destination)
@@ -31,4 +40,4 @@ def make_guess(country, destination):
 
 
 if __name__ == '__main__':
-    app.run()
+    create_app.run()
