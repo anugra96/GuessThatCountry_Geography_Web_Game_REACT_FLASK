@@ -5,7 +5,7 @@ import mapData from "../Data/countries.json";
 import CountryCenters from  "../Data/new_mini.json";
 
 
-function CountryMap(props) {
+function DestinationMap(props) {
 
 
 
@@ -33,6 +33,7 @@ function CountryMap(props) {
         return center_obj;
     }
 
+
     function OnEachCountry (country, layer) {
 
         const countryName = country.properties.ADMIN;
@@ -59,13 +60,13 @@ function CountryMap(props) {
 
     return <>
 
-        <MapContainer style={{ height: "100vh"}} zoom={6} center={get_country_center()}>
+        <MapContainer style={{ height: "70vh"}} zoom={4} center={get_country_center()}>
             {/* takes an array of country features */}
             {/* YOU CAN FILTER AND PASS THE RANDOM COUNTRY THROUGH HERE */}
             <GeoJSON data={mapData.features} onEachFeature={OnEachCountry}/>
             <MapConsumer>
                 {(map) => {
-                    map.flyTo(get_country_center(), 6);
+                    map.flyTo(get_country_center(), 4);
                 }}
             </MapConsumer>
         </MapContainer>
@@ -81,4 +82,4 @@ function CountryMap(props) {
 
 // Exporting the component
 
-export const MemoizedCountryMap = React.memo(CountryMap);
+export const MemoizedDestinationMap = React.memo(DestinationMap);
