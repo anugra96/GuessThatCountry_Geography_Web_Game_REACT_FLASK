@@ -20,6 +20,8 @@ import WSW from '../arrows/WSW.png';
 import SE from '../arrows/SE.png';
 import SSE from '../arrows/SSE.png';
 import ESE from '../arrows/ESE.png';
+import GuessMap from "./guess_map";
+
 
 const country_names = names;
 
@@ -104,30 +106,43 @@ function WebPage(props) {
     <Container>
         <Row className="pt-2">
             <Col>
-                    <section>
-                        <header>
-                            <h1>Welcome to Worldle.</h1>
-                        </header>
-                    </section>
-                    <h3>Guesses left: {6 - guesses_number}</h3>
-                <MemoizedCountryMap rand_dest={destination}/>   
+                    {!!((guesses_number < 6) & (guessResponse.distance !== 0)) &&
+                        <>
+                        <section>
+                            <header>
+                                <h1>Welcome to Worldle.</h1>
+                            </header>
+                        </section>
+                        <h3>Guesses left: {6 - guesses_number}</h3>
+                        <MemoizedCountryMap rand_dest={destination} />  
+                        </>
+                    }
+
+ 
             </Col>
             <Col md lg="4">
 
-                    <h2>Guess Country:</h2>
 
                     {!!(guessResponse.distance === 0) &&
+                        <>
                         <p>CONGRATULATIONS! YOU GOT IT.</p>
-                        
+                        <GuessMap guess_list={guess_list} home_country={props.home_country}/>
+                        </>
                     }
-
+                    
+                    
                     {!!((guesses_number === 6) & (guessResponse.distance !== 0)) &&
+                        <>
                         <p> SORRY YOU'RE OUT OF GUESSES. YOU'RE TRASH. THE ANSWER WAS {destination}</p>
+                        <GuessMap guess_list={guess_list} home_country={props.home_country}/>
+                        </>
                     }
 
 
                     {!!((guesses_number < 6) & (guessResponse.distance !== 0)) &&
-                        <><Select
+                        <>
+                        <h2>Guess Country:</h2>
+                        <Select
                             options={country_names}
                             onChange={setCountry}
                             style={{zIndex:9}} />

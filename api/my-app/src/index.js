@@ -4,6 +4,8 @@ import {createRoot} from 'react-dom/client';
 import {names} from "./Data/country_names";
 import AllCountryMap from "./Components/home_country";
 import WebPage from "./Components/start_game";
+import DestinationMap from "./Components/destination_map";
+import GuessMap from "./Components/guess_map";
 import "leaflet/dist/leaflet.css";
 import "./Styles/MyMap.css";
 
