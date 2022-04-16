@@ -21,6 +21,7 @@ import SE from '../arrows/SE.png';
 import SSE from '../arrows/SSE.png';
 import ESE from '../arrows/ESE.png';
 import GuessMap from "./guess_map";
+import ResultsMap from "./results_animation";
 
 
 const country_names = names;
@@ -126,7 +127,7 @@ function WebPage(props) {
                     {!!(guessResponse.distance === 0) &&
                         <>
                         <p>CONGRATULATIONS! YOU GOT IT.</p>
-                        <GuessMap guess_list={guess_list} home_country={props.home_country}/>
+                        <ResultsMap guess_list={guess_list}/>
                         </>
                     }
                     
@@ -134,7 +135,7 @@ function WebPage(props) {
                     {!!((guesses_number === 6) & (guessResponse.distance !== 0)) &&
                         <>
                         <p> SORRY YOU'RE OUT OF GUESSES. YOU'RE TRASH. THE ANSWER WAS {destination}</p>
-                        <GuessMap guess_list={guess_list} home_country={props.home_country}/>
+                        <ResultsMap guess_list={guess_list}/>
                         </>
                     }
 

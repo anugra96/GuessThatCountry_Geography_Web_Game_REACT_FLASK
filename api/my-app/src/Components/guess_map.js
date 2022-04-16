@@ -101,6 +101,9 @@ function GuessMap(props) {
 
 
         useEffect(() => {
+
+
+            
             var guesses = props.guess_list;
             console.log(guesses);
             console.log(guess_count);

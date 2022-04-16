@@ -8,6 +8,7 @@ import DestinationMap from "./Components/destination_map";
 import GuessMap from "./Components/guess_map";
 import "leaflet/dist/leaflet.css";
 import "./Styles/MyMap.css";
+import ResultsMap from "./Components/results_animation";
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
