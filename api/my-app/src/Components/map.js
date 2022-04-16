@@ -82,15 +82,17 @@ function CountryMap(props) {
             layer.setStyle(
                 {
                     color: "white",
-                    fillColor: "white",
+                    fillColor: "green",
+                    Weight: 0,
                 }
             )
         } else {
             layer.setStyle(
                 {
-                    color: "#1f1f1f",
+                    color: "white",
                     fillOpacity: 0,
                     opacity: 0,
+                    Weight: 0,
                 }
             )
         }

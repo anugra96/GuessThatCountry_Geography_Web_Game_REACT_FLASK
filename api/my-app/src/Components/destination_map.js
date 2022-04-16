@@ -43,6 +43,7 @@ function DestinationMap(props) {
                 {
                     color: "white",
                     fillColor: "white",
+                    Weight: 0,
                 }
             )
         } else {
@@ -51,6 +52,7 @@ function DestinationMap(props) {
                     color: "#1f1f1f",
                     fillOpacity: 0,
                     opacity: 0,
+                    Weight: 0,
                 }
             )
         }

@@ -3,7 +3,7 @@ import Select from 'react-select'
 import {names} from "../Data/country_names";
 import {MemoizedCountryMap} from "./map";
 import "leaflet/dist/leaflet.css";
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Navbar } from 'react-bootstrap';
 import N from '../arrows/N.png';
 import S from '../arrows/S.png';
 import E from '../arrows/E.png';
@@ -40,8 +40,9 @@ function WebPage(props) {
     const [guess_list, setGuesses] = useState(arr_of_guesses);
     const [guesses_number, setGuessesNumber] = useState(1)
     const [guessResponse, setGuessResponse] = useState({});
+    const [resultsButton, setResultsButton] = useState(0);
 
-
+    const destination_country = props.dest;
 
     var fetch_country;
     // make variable that fetches distance from flask api
@@ -102,59 +103,103 @@ function WebPage(props) {
         }
     }
 
+
+    function results_button_handler() {
+        setResultsButton(1);
+    }
+
     return <>
-    
-    <Container>
-        <Row className="pt-2">
-            <Col>
-                    {!!((guesses_number < 6) & (guessResponse.distance !== 0)) &&
-                        <>
-                        <section>
-                            <header>
-                                <h1>Welcome to Worldle.</h1>
-                            </header>
-                        </section>
+    <Navbar bg="light" expand="lg">
+        <Container>
+            <Navbar.Brand href="#home">Worldle by Anugra Shah</Navbar.Brand>
+            {/* <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="me-auto">
+                    <Nav.Link href="#home">Home</Nav.Link>
+                    <Nav.Link href="#link">Link</Nav.Link>
+                    <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                    </NavDropdown>
+                </Nav>
+            </Navbar.Collapse> */}
+        </Container>
+    </Navbar>
+
+    {!!(resultsButton === 0) &&
+        <>
+        {/* if they still have guesses left and haven't gotten it right */}
+        {!!((guesses_number < 6) & (guessResponse.distance !== 0)) &&
+            <>
+            <Container>
+                <Row className="pt-2">
+
+                    <Col>
+
+                        <MemoizedCountryMap rand_dest={destination} />
+
+                    </Col>
+
+                    <Col md lg="4">
                         <h3>Guesses left: {6 - guesses_number}</h3>
-                        <MemoizedCountryMap rand_dest={destination} />  
-                        </>
-                    }
-
- 
-            </Col>
-            <Col md lg="4">
-
-
-                    {!!(guessResponse.distance === 0) &&
-                        <>
-                        <p>CONGRATULATIONS! YOU GOT IT.</p>
-                        <ResultsMap guess_list={guess_list}/>
-                        </>
-                    }
-                    
-                    
-                    {!!((guesses_number === 6) & (guessResponse.distance !== 0)) &&
-                        <>
-                        <p> SORRY YOU'RE OUT OF GUESSES. YOU'RE TRASH. THE ANSWER WAS {destination}</p>
-                        <ResultsMap guess_list={guess_list}/>
-                        </>
-                    }
-
-
-                    {!!((guesses_number < 6) & (guessResponse.distance !== 0)) &&
-                        <>
-                        <h2>Guess Country:</h2>
                         <Select
                             options={country_names}
                             onChange={setCountry}
-                            style={{zIndex:9}} />
-                            <button onClick={fetchData}>
-                                Confirm Guess
-                            </button>
-                        </>
-                    }
+                            style={{ zIndex: 9 }} />
+                        <button onClick={fetchData}>
+                            Confirm Guess
+                        </button>
 
-                    {guessResponse !== {} &&
-                        <>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>Guess Number</th>
+                                    <th>Guessed Country</th>
+                                    <th>Distance to Destination</th>
+                                    <th>Direction to Destination</th>
+                                </tr>
+                                {guess_list.map(d => (
+                                    <tr>
+                                        <td>{d.guess_no}</td>
+                                        <td>{d.guessed_country}</td>
+                                        <td>{d.distance} km</td>
+                                        <td><img style={{
+                                            width: 20,
+                                            height: 20,
+                                        }} src={get_arrow(d.bearing)} /></td>
+                                    </tr>))}
+                            </tbody>
+                        </table>
+
+                    </Col>
+
+                </Row>
+            </Container>
+
+            </>
+        }
+        
+        {/* if they guessed the right country, then: */}
+        {!!(guessResponse.distance == 0) && 
+            <>
+
+                <Container>
+                    <Row className="pt-2">
+
+                        <Col>
+
+                            <MemoizedCountryMap rand_dest={destination} />
+
+                        </Col>
+
+
+                        <Col md lg="4">
+
+                            <p>CONGRATULATIONS! YOU GOT IT.</p>
+
                             <table>
                                 <tbody>
                                     <tr>
@@ -171,19 +216,90 @@ function WebPage(props) {
                                             <td><img style={{
                                                 width: 20,
                                                 height: 20,
-                                            }}src={get_arrow(d.bearing)} /></td>
+                                            }} src={get_arrow(d.bearing)} /></td>
                                         </tr>))}
                                 </tbody>
                             </table>
-                        </>
-                    }
+
+                            <button onClick={results_button_handler}>
+                                See Results Animation
+                            </button>
+
+                        </Col>
+
+                    </Row>
+                </Container>
             
-            </Col>
+            
+            </>
+        }
+
+        {/* if they have run out of guesses */}
+        {!!((guesses_number === 6) & (guessResponse.distance !== 0)) &&
+            <>
+
+                <Container>
+                    <Row className="pt-2">
+
+                        <Col>
+
+                            <MemoizedCountryMap rand_dest={destination} />
+
+                        </Col>
+
+                        <Col md lg="4">
+                            <p>You are out of guesses. The answer was: {destination}</p>
+
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>Guess Number</th>
+                                        <th>Guessed Country</th>
+                                        <th>Distance to Destination</th>
+                                        <th>Direction to Destination</th>
+                                    </tr>
+                                    {guess_list.map(d => (
+                                        <tr>
+                                            <td>{d.guess_no}</td>
+                                            <td>{d.guessed_country}</td>
+                                            <td>{d.distance} km</td>
+                                            <td><img style={{
+                                                width: 20,
+                                                height: 20,
+                                            }} src={get_arrow(d.bearing)} /></td>
+                                        </tr>))}
+                                </tbody>
+                            </table>
+
+                            <button onClick={results_button_handler}>
+                                See Results Animation
+                            </button>
+
+                        </Col>
+
+                    </Row>
+
+                </Container>
+
+            </>
+        }
+        
+        </>
+    }
+
+    {!!(resultsButton === 1) &&
+        <>
+            <ResultsMap guess_list={guess_list} dest={destination}/>
+        </>
+    }
+
+    
 
 
-            </Row>
-                
-        </Container>
+
+
+
+
 
     </>
 }

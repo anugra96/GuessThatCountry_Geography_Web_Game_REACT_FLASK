@@ -20,10 +20,6 @@ export const names = [
        label:"Albania"
     },
     {
-       value:"Aland",
-       label:"Aland"
-    },
-    {
        value:"Andorra",
        label:"Andorra"
     },
@@ -195,10 +191,6 @@ export const names = [
     {
        value:"Costa Rica",
        label:"Costa Rica"
-    },
-    {
-       value:"Coral Sea Islands",
-       label:"Coral Sea Islands"
     },
     {
        value:"Cuba",

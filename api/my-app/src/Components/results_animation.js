@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef, onEachFeature } from "react";
 import ReactDOM from "react-dom";
-import { MapContainer, GeoJSON, MapConsumer, useMapEvent, useMap } from 'react-leaflet'
+import { MapContainer, GeoJSON, MapConsumer, useMapEvent, useMap, TileLayer } from 'react-leaflet'
 import mapData from "../Data/countries.json";
 import CountryCenters from  "../Data/new_mini.json";
 import area from '@turf/area';
@@ -10,6 +10,24 @@ function ResultsMap(props) {
     // const [guessList, setGuessList] = useState(props.guess_list);
     // const [map, setMap] = useState(null);
     // var guess_list_len = (props.guess_list).length;
+
+    function in_guess_list(country) {
+        var len = props.guess_list.length;
+        var i;
+        var ret_val = false;
+        for (i = 0; i < len; ++i) {
+            
+            if (country === props.guess_list[i].guessed_country) {
+                console.log(props.guess_list[i].guessed_country)
+                ret_val = true;
+                break;
+            } else {
+                continue;
+            }
+        }
+
+        return ret_val;
+    }
 
     function set_zoom(country_name){
         var random_country = country_name;
@@ -31,16 +49,16 @@ function ResultsMap(props) {
 
 
         if (temp_area < 5000) {
-            zoom_level = 8.5;
+            zoom_level = 8;
         }
         else if ((temp_area > 5000) && (temp_area < 100000)) {
-            zoom_level = 7; 
+            zoom_level = 6.5; 
         } else if ((temp_area > 100000) && (temp_area < 250000)) {
-            zoom_level = 5.5;
+            zoom_level = 5;
         } else if ((temp_area > 250000) && (temp_area < 750000)) {
-            zoom_level = 4.5
+            zoom_level = 4
         } else {
-            zoom_level = 3.5;
+            zoom_level = 2;
         }
 
     
@@ -69,19 +87,59 @@ function ResultsMap(props) {
 
     function OnEachCountry (country, layer) {
         const countryName = country.properties.ADMIN;
-        layer.setStyle(
-            {
-                color: "black",
-                fillColor: "white",
-                fillOpacity: 100,
-                Weight: 1,
-            }
-        )
+        // layer.setStyle(
+        //     {
+        //         color: "black",
+        //         fillColor: "white",
+        //         fillOpacity: 100,
+        //         Weight: 1,
+        //     }
+        // )
+        
+
+        // if country is the destination
+        if (countryName === props.dest) {
+            layer.bindPopup(countryName);
+            layer.togglePopup();
+            layer.setStyle(
+                {
+                    color: "green",
+                    fillColor: "green",
+                    weight: 2,
+                    fillOpacity: 0.5,
+                }
+            )
+        }
+        
+        // if country is in the guess list
+        else if (in_guess_list(countryName) === true) {
+            layer.bindPopup(countryName);
+            layer.togglePopup();
+            layer.setStyle(
+                {
+                    color: "red",
+                    fillColor: "red",
+                    weight: 2,
+                    fillOpacity: 0.5,
+                }
+            )
+        // rest of the countries
+        } else {
+            layer.setStyle(
+                {
+                    color: "white",
+                    fillColor: "#1f1f1f",
+                    weight: 0,
+                    fillOpacity: 0,
+                }
+            )
+        }
+        
 
     }
 
 
-    function SetViewOnClick(props) {
+    function SetViewOnClick() {
 
         const map = useMap();
 
@@ -92,6 +150,7 @@ function ResultsMap(props) {
         // const arr = [india, canada, india2, canada2];
 
         const countries_arr = props.guess_list;
+        const destination = props.dest;
         console.log(countries_arr);
         
 
@@ -109,10 +168,12 @@ function ResultsMap(props) {
                 i = i + 1;
  
             } else {
+                console.log(props.dest);
+                map.flyTo(get_country_center(props.dest), set_zoom(props.dest));
                 console.log("DONE");
                 clearInterval(timer);
             }
-        }, 4000);
+        }, 5000);
 
 
         // map.flyTo([28.644800, 77.216721], 5);
@@ -138,7 +199,8 @@ function ResultsMap(props) {
         return (
           <>
                 <MapContainer
-                    style={{ height: "100vh" }}
+                    className={'map_container'}
+                    style={{ height: "80vh"}}
                     zoom={2}
                     center={[20, 100]}
                     zoomControl={true}
@@ -149,8 +211,14 @@ function ResultsMap(props) {
                     {/* takes an array of country features */}
                     {/* YOU CAN FILTER AND PASS THE RANDOM COUNTRY THROUGH HERE */}
                     <GeoJSON data={mapData.features} onEachFeature={OnEachCountry} />
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
                     <SetViewOnClick guess_list = {props.guess_list}/>
                 </MapContainer>
+
+
                 
                 
           </>
