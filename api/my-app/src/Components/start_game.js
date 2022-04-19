@@ -3,7 +3,7 @@ import Select from 'react-select'
 import {names} from "../Data/country_names";
 import {MemoizedCountryMap} from "./map";
 import "leaflet/dist/leaflet.css";
-import { Container, Row, Col, Navbar } from 'react-bootstrap';
+import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import N from '../arrows/N.png';
 import S from '../arrows/S.png';
 import E from '../arrows/E.png';
@@ -109,25 +109,37 @@ function WebPage(props) {
     }
 
     return <>
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="dark" expand="lg" variant="dark">
         <Container>
-            <Navbar.Brand href="#home">Worldle by Anugra Shah</Navbar.Brand>
-            {/* <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto">
-                    <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#link">Link</Nav.Link>
-                    <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                    </NavDropdown>
-                </Nav>
-            </Navbar.Collapse> */}
+            <Navbar.Brand href="#home">
+                <img
+                    alt="img"
+                    src="/globe_white.png"
+                    width="35"
+                    height="35"
+                    className="d-inline-block align-top" />
+                Worldle by Anugra Shah
+            </Navbar.Brand>
+            <Nav.Link href="https://github.com/anugra96/Worldle_ReactFlask_WebApp" target={"_blank"}>Code</Nav.Link>
+
         </Container>
     </Navbar>
+
+{/* 
+    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    <Navbar.Collapse id="basic-navbar-nav">
+      <Nav className="me-auto">
+        <Nav.Link href="#home">Home</Nav.Link>
+        <Nav.Link href="#link">Link</Nav.Link>
+        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+          <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+          <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+          <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+          <NavDropdown.Divider />
+          <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+        </NavDropdown>
+      </Nav>
+    </Navbar.Collapse> */}
 
     {!!(resultsButton === 0) &&
         <>

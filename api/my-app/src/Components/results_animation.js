@@ -4,12 +4,68 @@ import { MapContainer, GeoJSON, MapConsumer, useMapEvent, useMap, TileLayer } fr
 import mapData from "../Data/countries.json";
 import CountryCenters from  "../Data/new_mini.json";
 import area from '@turf/area';
+import N from '../arrows/N.png';
+import S from '../arrows/S.png';
+import E from '../arrows/E.png';
+import W from '../arrows/W.png';
+import NW from '../arrows/NW.png';
+import NNW from '../arrows/NNW.png';
+import WNW from '../arrows/WNW.png';
+import NE from '../arrows/NE.png';
+import NNE from '../arrows/NNE.png';
+import ENE from '../arrows/ENE.png';
+import SW from '../arrows/SW.png';
+import SSW from '../arrows/SSW.png';
+import WSW from '../arrows/WSW.png';
+import SE from '../arrows/SE.png';
+import SSE from '../arrows/SSE.png';
+import ESE from '../arrows/ESE.png';
+import GuessMap from "./guess_map";
 
 
 function ResultsMap(props) {    
     // const [guessList, setGuessList] = useState(props.guess_list);
     // const [map, setMap] = useState(null);
     // var guess_list_len = (props.guess_list).length;
+
+
+    function get_arrow(query_direction) {
+        if (query_direction === "N") {
+            return N;
+        } else if (query_direction === "S") {
+            return S;
+        } else if (query_direction === "E") {
+            return E;
+        } else if (query_direction === "W") {
+            return W;
+        } else if (query_direction === "NW") {
+            return NW;
+        } else if (query_direction === "NNW") {
+            return NNW;
+        } else if (query_direction === "WNW") {
+            return WNW;
+        } else if (query_direction === "NE") {
+            return NE;
+        } else if (query_direction === "NNE") {
+            return NNE;
+        } else if (query_direction === "ENE") {
+            return ENE;
+        } else if (query_direction === "SW") {
+            return SW;
+        } else if (query_direction === "SSW") {
+            return SSW;
+        } else if (query_direction === "WSW") {
+            return WSW;
+        } else if (query_direction === "SE") {
+            return SE;
+        } else if (query_direction === "SSE") {
+            return SSE;
+        } else if (query_direction === "ESE") {
+            return ESE;
+        } else {
+            return N;
+        }
+    }
 
     function in_guess_list(country) {
         var len = props.guess_list.length;
@@ -143,19 +199,15 @@ function ResultsMap(props) {
 
         const map = useMap();
 
-        // const india = [28.644800, 77.216721];
-        // const canada = [56.130366, -106.346771];
-        // const india2 = [28.644800, 77.216721];
-        // const canada2 = [56.130366, -106.346771];
-        // const arr = [india, canada, india2, canada2];
 
         const countries_arr = props.guess_list;
-        const destination = props.dest;
-        console.log(countries_arr);
+
         
 
         var guess_length = countries_arr.length; // 4
-        var i = 0;
+        var i = 1;
+
+        map.flyTo(get_country_center(countries_arr[0].guessed_country), set_zoom(countries_arr[0].guessed_country) );
         
         var timer = setInterval(function() {
             if (i < guess_length) { 
@@ -173,24 +225,7 @@ function ResultsMap(props) {
                 console.log("DONE");
                 clearInterval(timer);
             }
-        }, 5000);
-
-
-        // map.flyTo([28.644800, 77.216721], 5);
-
-
-        // map.flyTo([28.644800, 77.216721], 5);
-
-
-        // useEffect(() => {
-        //     var guesses = props.guess_list;
-        //     console.log(guesses);
-        //     console.log(guess_count);
-        //     var guessed = (guesses[guess_count]).guessed_country;
-            
-        //     console.log(guessed);
-        //     map.flyTo(get_country_center(guessed), 5);
-        // }, [guess_count]);
+        }, 4500);
 
         return null
     }
@@ -213,14 +248,12 @@ function ResultsMap(props) {
                     <GeoJSON data={mapData.features} onEachFeature={OnEachCountry} />
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
                     />
                     <SetViewOnClick guess_list = {props.guess_list}/>
+
                 </MapContainer>
 
-
-                
-                
           </>
         )
       }
