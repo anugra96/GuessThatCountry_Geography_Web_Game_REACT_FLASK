@@ -122,9 +122,9 @@ function WebPage() {
                     width="35"
                     height="35"
                     className="d-inline-block align-top" />
-                Worldle by Anugra Shah
+                GuessThatCountry by Anugra Shah
             </Navbar.Brand>
-            <Nav.Link href="https://github.com/anugra96/Worldle_ReactFlask_WebApp" target={"_blank"}>Code</Nav.Link>
+            <Nav.Link href="https://github.com/anugra96/GuessThatCountry_WebGame" target={"_blank"}>Code</Nav.Link>
 
         </Container>
     </Navbar>
