@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
-import ReactDOM from "react-dom";
 import {createRoot} from 'react-dom/client';
 import {names} from "./Data/country_names";
-import AllCountryMap from "./Components/home_country";
 import WebPage from "./Components/start_game";
-import DestinationMap from "./Components/destination_map";
-import GuessMap from "./Components/guess_map";
 import "leaflet/dist/leaflet.css";
 import "./Styles/MyMap.css";
-import ResultsMap from "./Components/results_animation";
+import { StartGameContext } from "./Contexts/StartGameContext";
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
@@ -30,20 +26,14 @@ function RandomCountry() {
 
         fetch(fetch_url).then(res => res.json()).then(data => {
 
-        })});
+        })}, []);
 
     return <>
-        <HomePage random_country={randomCountry}/>
+        <StartGameContext.Provider value={{ randomCountry}}>
+            <WebPage />
+        </StartGameContext.Provider>
+        
     </>
 }
-
-
-function HomePage(props) {
-    const random_country_prop = props.random_country;
-    return <>
-        <WebPage rand_dest={random_country_prop} />
-    </>
-}
-
 
 root.render(<RandomCountry />);

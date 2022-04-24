@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import Select from 'react-select'
 import {names} from "../Data/country_names";
 import {MemoizedCountryMap} from "./map";
@@ -20,8 +20,10 @@ import WSW from '../arrows/WSW.png';
 import SE from '../arrows/SE.png';
 import SSE from '../arrows/SSE.png';
 import ESE from '../arrows/ESE.png';
-import GuessMap from "./guess_map";
 import ResultsMap from "./results_animation";
+import { StartGameContext } from "../Contexts/StartGameContext";
+import { GuessContext } from "../Contexts/GuessContext";
+
 
 
 const country_names = names;
@@ -31,18 +33,20 @@ const arr_of_guesses = [];
 const make_guess_str = "/make_guess/";
 
 
-function WebPage(props) {
+function WebPage() {
+    const {randomCountry} = useContext(StartGameContext);
     const [country, setCountry] = useState({
-        value: props.home_country,
-        label: props.home_country
+        value: "",
+        label: ""
     });
-    const [destination, setDestination] = useState(props.rand_dest);
+    const [destination, setDestination] = useState(randomCountry);
     const [guess_list, setGuesses] = useState(arr_of_guesses);
     const [guesses_number, setGuessesNumber] = useState(1)
     const [guessResponse, setGuessResponse] = useState({});
     const [resultsButton, setResultsButton] = useState(0);
+    
 
-    const destination_country = props.dest;
+
 
     var fetch_country;
     // make variable that fetches distance from flask api
@@ -150,9 +154,7 @@ function WebPage(props) {
                 <Row className="pt-2">
 
                     <Col>
-
                         <MemoizedCountryMap rand_dest={destination} />
-
                     </Col>
 
                     <Col md lg="4">
@@ -301,7 +303,9 @@ function WebPage(props) {
 
     {!!(resultsButton === 1) &&
         <>
-            <ResultsMap guess_list={guess_list} dest={destination}/>
+            <GuessContext.Provider value={{guess_list, destination}} >
+                <ResultsMap />
+            </GuessContext.Provider>
         </>
     }
 

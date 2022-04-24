@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useCallback, useRef, onEachFeature } from "react";
-import ReactDOM from "react-dom";
-import { MapContainer, GeoJSON, MapConsumer, useMapEvent, useMap, TileLayer } from 'react-leaflet'
+import React, { useContext } from "react";
+import { MapContainer, GeoJSON, useMap, TileLayer } from 'react-leaflet'
 import mapData from "../Data/countries.json";
 import CountryCenters from  "../Data/new_mini.json";
 import area from '@turf/area';
@@ -20,61 +19,21 @@ import WSW from '../arrows/WSW.png';
 import SE from '../arrows/SE.png';
 import SSE from '../arrows/SSE.png';
 import ESE from '../arrows/ESE.png';
-import GuessMap from "./guess_map";
+import { GuessContext } from "../Contexts/GuessContext";
 
 
-function ResultsMap(props) {    
-    // const [guessList, setGuessList] = useState(props.guess_list);
-    // const [map, setMap] = useState(null);
-    // var guess_list_len = (props.guess_list).length;
+function ResultsMap() {    
 
-
-    function get_arrow(query_direction) {
-        if (query_direction === "N") {
-            return N;
-        } else if (query_direction === "S") {
-            return S;
-        } else if (query_direction === "E") {
-            return E;
-        } else if (query_direction === "W") {
-            return W;
-        } else if (query_direction === "NW") {
-            return NW;
-        } else if (query_direction === "NNW") {
-            return NNW;
-        } else if (query_direction === "WNW") {
-            return WNW;
-        } else if (query_direction === "NE") {
-            return NE;
-        } else if (query_direction === "NNE") {
-            return NNE;
-        } else if (query_direction === "ENE") {
-            return ENE;
-        } else if (query_direction === "SW") {
-            return SW;
-        } else if (query_direction === "SSW") {
-            return SSW;
-        } else if (query_direction === "WSW") {
-            return WSW;
-        } else if (query_direction === "SE") {
-            return SE;
-        } else if (query_direction === "SSE") {
-            return SSE;
-        } else if (query_direction === "ESE") {
-            return ESE;
-        } else {
-            return N;
-        }
-    }
+    const { guess_list, destination } = useContext(GuessContext);
 
     function in_guess_list(country) {
-        var len = props.guess_list.length;
+        var len = guess_list.length;
         var i;
         var ret_val = false;
         for (i = 0; i < len; ++i) {
             
-            if (country === props.guess_list[i].guessed_country) {
-                console.log(props.guess_list[i].guessed_country)
+            if (country === guess_list[i].guessed_country) {
+                console.log(guess_list[i].guessed_country)
                 ret_val = true;
                 break;
             } else {
@@ -143,18 +102,10 @@ function ResultsMap(props) {
 
     function OnEachCountry (country, layer) {
         const countryName = country.properties.ADMIN;
-        // layer.setStyle(
-        //     {
-        //         color: "black",
-        //         fillColor: "white",
-        //         fillOpacity: 100,
-        //         Weight: 1,
-        //     }
-        // )
         
 
         // if country is the destination
-        if (countryName === props.dest) {
+        if (countryName === destination) {
             layer.bindPopup(countryName);
             layer.togglePopup();
             layer.setStyle(
@@ -200,7 +151,7 @@ function ResultsMap(props) {
         const map = useMap();
 
 
-        const countries_arr = props.guess_list;
+        const countries_arr = guess_list;
 
         
 
@@ -220,14 +171,18 @@ function ResultsMap(props) {
                 i = i + 1;
  
             } else {
-                console.log(props.dest);
-                map.flyTo(get_country_center(props.dest), set_zoom(props.dest));
+                console.log(destination);
+                map.flyTo(get_country_center(destination), set_zoom(destination));
                 console.log("DONE");
                 clearInterval(timer);
             }
         }, 4500);
 
         return null
+    }
+
+    function refreshPage() {
+        window.location.reload(false);
     }
       
     function Animate() {
@@ -250,9 +205,13 @@ function ResultsMap(props) {
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
                     />
-                    <SetViewOnClick guess_list = {props.guess_list}/>
+                    <SetViewOnClick />
 
                 </MapContainer>
+
+                <div>
+                    <button onClick={refreshPage}>New Game </button>
+                </div>
 
           </>
         )
@@ -266,6 +225,4 @@ function ResultsMap(props) {
 };
 
 // Exporting the component
-
-// export const MemoizedDestinationMap = React.memo(DestinationMap);
 export default ResultsMap;
